@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  build-and-deploy:
+  build-and-push:
     runs-on: ubuntu-latest
     env:
       ACCOUNT_ID: ${{ secrets.ACCOUNT_ID }} 
@@ -29,7 +29,7 @@ jobs:
 
     - name: Build Runner Image
       run: |
-        docker build -t $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/test-app:latest .
+        docker build --build-arg ACCOUNT_ID=$ACCOUNT_ID -t $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/test-app:latest .
 
     - name: Push to ECR
       run: |
